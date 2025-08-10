@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CSS Button Animation Demo</title>
+  <style>
+    :root{
+      --bg: #0f172a;
+      --card: #0b1220;
+      --accent: #06b6d4;
+      --accent-2: #7c3aed;
+      --text: #e6eef8;
+    }
+
+    /* page layout */
+    body{
+      margin:0;
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+      background: linear-gradient(180deg,var(--bg), #071027 60%);
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color:var(--text);
+    }
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.05));
+      border: 1px solid rgba(255,255,255,0.04);
+      padding:36px;
+      border-radius:16px;
+      box-shadow: 0 8px 30px rgba(2,6,23,0.6);
+      text-align:center;
+      width:320px;
+    }
+
+    h1{ font-size:18px; margin:0 0 14px; letter-spacing:0.3px; }
+    p{ font-size:13px; color:rgba(230,238,248,0.8); margin:0 0 18px; }
+
+    /* THE BUTTON */
+    .btn {
+      --btn-h: 48px;
+      display:inline-grid;
+      place-items:center;
+      height:var(--btn-h);
+      padding:0 28px;
+      border-radius:10px;
+      background: linear-gradient(90deg,var(--accent), var(--accent-2));
+      color: #06202a;
+      font-weight:700;
+      font-size:15px;
+      border:none;
+      cursor:pointer;
+      transform: translateY(0);
+      transition: transform 220ms cubic-bezier(.2,.9,.3,1), box-shadow 220ms;
+      box-shadow: 0 8px 20px rgba(12,20,40,0.45), 0 2px 6px rgba(12,20,40,0.25) inset;
+      position:relative;
+      overflow:hidden;
+    }
+
+    /* small shine effect (pure css) */
+    .btn::after{
+      content:"";
+      position:absolute;
+      top:0;
+      left:-40%;
+      width:40%;
+      height:100%;
+      background: linear-gradient(120deg, rgba(255,255,255,0.12), rgba(255,255,255,0.02));
+      transform: skewX(-20deg);
+      transition: left 450ms cubic-bezier(.2,.8,.2,1);
+      pointer-events:none;
+    }
+
+    /* Hover triggers two things: bounce keyframe + shine + lift */
+    .btn:hover{
+      animation: bounce 560ms cubic-bezier(.2,.8,.2,1);
+      transform: translateY(-6px) scale(1.02);
+      box-shadow: 0 18px 34px rgba(12,20,40,0.55), 0 6px 12px rgba(12,20,40,0.22) inset;
+    }
+
+    .btn:hover::after{
+      left:100%;
+    }
+
+    /* gentle press on click */
+    .btn:active{
+      transform: translateY(-2px) scale(.995);
+      transition: transform 120ms;
+    }
+
+    /* bounce keyframes — subtle up-and-down */
+    @keyframes bounce {
+      0%   { transform: translateY(0) scale(1); }
+      30%  { transform: translateY(-10px) scale(1.03); }
+      55%  { transform: translateY(-5px)  scale(1.015); }
+      100% { transform: translateY(-6px)  scale(1.02); }
+    }
+
+    /* accessibility: focus-visible style */
+    .btn:focus{
+      outline: 3px solid rgba(255,255,255,0.06);
+      box-shadow: 0 0 0 6px rgba(6,182,212,0.07);
+    }
+  </style>
+</head>
+<body>
+  <div class="card" role="main" aria-labelledby="title">
+    <h1 id="title">CSS-only Animated Button</h1>
+    <p>Hover the button to see a bounce + shine effect. No JavaScript required.</p>
+
+    <button class="btn" type="button">Hover me</button>
+  </div>
+</body>
+</html>
